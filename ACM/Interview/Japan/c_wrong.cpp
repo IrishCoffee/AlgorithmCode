@@ -36,7 +36,12 @@ void dfs(int cur,int end,int &ans,int &del_a,int &del_b,int old_a,int old_b,int 
 			continue;
 		flag[i] = false;
 		if(mat[i][cur] < old_day)
-			dfs(i,end,ans,del_a,del_b,i,cur,mat[i][cur]);
+		{
+			old_day = mat[i][cur];
+			old_a = i;
+			old_b = cur;
+			dfs(i,end,ans,del_a,del_b,old_a,old_b,old_day);
+		}
 		else
 			dfs(i,end,ans,del_a,del_b,old_a,old_b,old_day);
 		flag[i] = true;
@@ -70,6 +75,7 @@ int main()
 				memset(flag,true,sizeof(flag));
 				flag[i] = false;
 				dfs(i,b,ans,del_a,del_b,i,a,mat[i][a]);
+				flag[i] = true;
 			}
 			if(ans == -1)
 				printf("NO\n");
