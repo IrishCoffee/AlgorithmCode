@@ -1,0 +1,2 @@
+b is a good question 
+Notice that: 2^64-1 is bigger than long long,we need to use unsigned long long

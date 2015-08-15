@@ -1,0 +1,84 @@
+/*
+ID: irishco1
+PROG: barn1
+LANG: C++
+*/
+#include <iostream>
+#include <cstdio>
+#include <string>
+#include <cstring>
+#include <algorithm>
+using namespace std;
+
+struct NODE
+{
+	int id,diff,prev;
+}node[256];
+
+bool cmp(NODE a,NODE b)
+{
+	if(a.diff > b.diff)
+		return true;
+	return false;
+}
+bool cmp1(NODE a,NODE b)
+{
+	if(a.id < b.id)
+		return true;
+	return false;
+}
+
+int main()
+{
+	freopen("barn1.in","r",stdin);
+	freopen("barn1.out","w",stdout);
+	int M,S,C;
+	int start,end;
+	bool flag[256];
+	scanf("%d%d%d",&M,&S,&C);
+	for(int i = 0; i < C;++i)
+		scanf("%d",&node[i].id);
+	sort(node,node+C,cmp1);
+	for(int i = 0; i < C; ++i)
+	{
+		if(i == 0)
+		{
+			node[i].prev = node[i].id;
+			node[i].diff = 0;
+		}
+		else
+		{
+			node[i].prev = node[i-1].id;
+			node[i].diff = node[i].id - node[i-1].id;
+		}
+	}
+	if(M >= C)
+	{
+		printf("%d\n",C);
+		return 0;
+	}
+	start = node[0].id;
+	end = node[C-1].id;
+	sort(node,node+C,cmp);
+	memset(flag,true,sizeof(flag));
+	for(int i = 0; i < M-1; ++i)
+	{
+		for(int j = node[i].prev + 1; j < node[i].id; ++j)
+			flag[j] = false;
+	}
+	int cnt = 0;
+	for(int i = start; i <= end; ++i)
+		if(flag[i])
+			cnt++;
+	printf("%d\n",cnt);
+	return 0;
+}
+
+
+
+
+
+
+
+
+

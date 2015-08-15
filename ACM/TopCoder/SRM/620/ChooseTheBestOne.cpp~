@@ -1,0 +1,66 @@
+#include <iostream>
+#include <cstdio>
+#include <cstdlib>
+#include <cstring>
+#include <algorithm>
+#include <cstring>
+#include <cmath>
+#include <string>
+#include <vector>
+#include <queue>
+#include <map>
+#include <stack>
+using namespace std;
+
+class ChooseTheBestOne 
+{
+	public:
+		int countNumber(int N) 
+		{
+			if(N == 1)
+				return 1;
+			bool flag[5005];
+			int next = 2;
+			memset(flag,false,sizeof(flag));
+			flag[1] = true;
+			for(int i = 2; i <= N - 1; ++i)
+			{
+				int tmp = N - i + 1;
+				int id = ((i % tmp) * (i % tmp) * (i % tmp)) % tmp;
+				int cnt = 1;
+				if(id == 0)
+					id = tmp;
+				bool ff = false;
+				for(int j = next; j <= N; ++j)
+				{
+					if(!ff && cnt == id && !flag[j])
+					{
+						ff = true;
+						flag[j] = true;
+					}
+					else if(!ff && !flag[j])
+						cnt++;
+					else if(!flag[j])
+					{
+						next = j;
+						break;
+					}
+					if(j == N)
+						j = 0;
+				}
+			}
+			for(int i = 1; i <= N; ++i)
+				if(!flag[i])
+					return i;
+		}
+};
+
+int main()
+{
+	ChooseTheBestOne sol;
+	int i;
+	cin >> i;
+		cout << sol.countNumber(i) << endl;
+	return 0;
+}
+
